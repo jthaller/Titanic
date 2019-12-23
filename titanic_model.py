@@ -49,7 +49,7 @@ test_filepath = "C:/Users/jerem/OneDrive/Documents/Python/titanic/test.csv"
 train_filepath = "C:/Users/jerem/OneDrive/Documents/Python/titanic/train.csv"
 df_train = pd.read_csv(train_filepath)
 df_test = pd.read_csv(test_filepath)
-train_data.head()
+df_train.head()
 
 
 # Modify the graph above by assigning each species an individual color.
@@ -71,3 +71,20 @@ plt.show()
 
 # DATA preprocessing -----------------------------------
 print(df_train.shape)
+
+
+def check_missing_data(df):
+    flag=df.isna().sum().any() # .any makes it return a boolean
+    if flag==True:
+        total = df.isnull().sum()
+        percent = (df.isnull().sum())/(df.isnull().count()*100)
+        output = pd.concat([total, percent], axis=1, keys=['Total', 'Percent'])
+        data_type = []
+        # written by MJ Bahmani
+        for col in df.columns:
+            dtype = str(df[col].dtype)
+            data_type.append(dtype)
+        output['Types'] = data_type
+        return(np.transpose(output))
+    else:
+        return(False)
